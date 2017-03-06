@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class MainPage extends Component {
+export default class SearchRates extends Component {
   render() {
     return (
       <div>
-        Main page,
+        SearchRates
       </div>
     )
   }
