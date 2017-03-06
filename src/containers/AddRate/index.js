@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class MainPage extends Component {
+export default class AddRate extends Component {
   render() {
     return (
       <div>
-        Main page,
+        Add rate
       </div>
     )
   }
