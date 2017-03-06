@@ -26,14 +26,6 @@ export function loadRates() {
       })
     }*/
 
-    /*dispatch({
-      type: LOAD_RATES_SUCCESS,
-      data: [12,23, 33],
-    })*/
   }
-  /*dispatch({
-    type: LOAD_RATES_SUCCESS,
-    data: [1,2,3],
-  })*/
 }
 
