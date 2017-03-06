@@ -7,9 +7,9 @@ import { rootReducer } from '../reducers'
 
 export default function configureStore() {
   const store = compose(
-    applyMiddleware(thunkMiddleware),
-    applyMiddleware(createLogger({collapsed: true})),
-    applyMiddleware(routerMiddleware(browserHistory)),
+    applyMiddleware(thunkMiddleware), // ajax
+    applyMiddleware(createLogger({collapsed: true})), // debug
+    applyMiddleware(routerMiddleware(browserHistory)), // router
   )(createStore)(rootReducer)
 
   if (module.hot) {
