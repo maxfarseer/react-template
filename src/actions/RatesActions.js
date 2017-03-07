@@ -1,5 +1,9 @@
-export const LOAD_RATES_REQUEST = 'LOAD_RATES_REQUEST'
-export const LOAD_RATES_SUCCESS = 'LOAD_RATES_SUCCESS'
+import {
+  LOAD_RATES_REQUEST,
+  LOAD_RATES_SUCCESS,
+  LOAD_RATES_FAILURE,
+  ADD_RATE,
+} from '../constants/Rates'
 
 /*
   dispatch({
@@ -16,16 +20,29 @@ export function loadRates() {
       type: LOAD_RATES_REQUEST,
     })
 
-
-    // homework
-    /*$.ajax
-    succes(data) {
-      dispatch({
-        type: LOAD_RATES_SUCCESS,
-        data,
-      })
-    }*/
+    $.ajax({ //eslint-disable-line no-undef
+      url: 'http://localhost:3000/static/json/fakeData.json',
+      cache: false,
+      success: function(data) {
+        dispatch({
+          type: LOAD_RATES_SUCCESS,
+          data,
+        })
+      },
+      error: function(err) {
+        dispatch({
+          type: LOAD_RATES_FAILURE,
+          text: err.statusText,
+        })
+      },
+    })
 
   }
 }
 
+export function addRate(params) {
+  return {
+    type: ADD_RATE,
+    item: params,
+  }
+}
