@@ -2,6 +2,7 @@ import {
   LOAD_RATES_REQUEST,
   LOAD_RATES_SUCCESS,
   LOAD_RATES_FAILURE,
+  RATES_FILTER,
   ADD_RATE,
 } from '../constants/Rates'
 
@@ -44,5 +45,13 @@ export function addRate(params) {
   return {
     type: ADD_RATE,
     item: params,
+  }
+}
+
+export function countryFilter(filterName, filterValue) {
+  return {
+    type: RATES_FILTER,
+    filterName,
+    filterValue,
   }
 }

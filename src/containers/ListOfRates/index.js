@@ -2,20 +2,26 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as RatesActions from '../../actions/RatesActions'
+import * as CountriesActions from '../../actions/CountriesActions'
 
 class ListOfRates extends Component {
   constructor(props) {
     super(props)
     this.addRate = this.addRate.bind(this)
     this.inputChange = this.inputChange.bind(this)
+    this.renderOptions = this.renderOptions.bind(this)
+    this.selectChange = this.selectChange.bind(this)
     this.state = {
       name: '',
       price: 0,
+      country: '',
+      rating: '',
     }
   }
 
   componentDidMount() {
-    this.props.loadRates()
+    this.props.ratesActions.loadRates()
+    this.props.countriesActions.loadCountries()
   }
   addRate() {
     const { name, price } = this.state
@@ -33,6 +39,8 @@ class ListOfRates extends Component {
         <tr key={index}>
           <td>{item.name}</td>
           <td>{item.price}</td>
+          <td>{item.country}</td>
+          <td>{item.rating}</td>
         </tr>
       )
     })
@@ -51,6 +59,8 @@ class ListOfRates extends Component {
           <tr>
             <th>Name</th>
             <th onClick={this.sort}>Price</th>
+            <th><i className='fa fa-flag-o'></i></th>
+            <th><i className='fa fa-star'></i></th>
           </tr>
         </thead>
         <tbody>
@@ -66,8 +76,21 @@ class ListOfRates extends Component {
       [e.target.id]: e.target.value,
     })
   }
+  selectChange(e) {
+    const filterValue = e.target.value
+    const filterName = e.target.id
+    this.setState({
+      [filterName]: filterValue,
+    }, () => {
+      this.props.ratesActions.countryFilter(filterName, filterValue)
+    })
+  }
+  renderOptions() {
+    const data = this.props.countries.data
+    return data.map((item, index) => <option key={index} value={item.code}>{item.name}</option>)
+  }
   render() {
-    const { name, price } = this.state
+    const { name, price, country, rating } = this.state
     const error = this.props.rates.error
     return (
       <div>
@@ -87,6 +110,17 @@ class ListOfRates extends Component {
           </div>
         </div>
 
+        <select id='country' onChange={this.selectChange} value={country}>
+          <option value=''>Unset</option>
+          { this.renderOptions() }
+        </select>
+
+        <select id='rating' onChange={this.selectChange} value={rating}>
+          <option value=''>Unset</option>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+        </select>
+
         { error ? <p className='bg-danger'>{error}</p> : null }
 
         { this.renderPage() }
@@ -96,14 +130,20 @@ class ListOfRates extends Component {
   }
 }
 
+
+
 function mapStateToProps(state) {
   return {
     rates: state.rates,
+    countries: state.countries,
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators( RatesActions, dispatch)
+  return {
+    ratesActions: bindActionCreators( RatesActions, dispatch),
+    countriesActions: bindActionCreators( CountriesActions, dispatch),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListOfRates)

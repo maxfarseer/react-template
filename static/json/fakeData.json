@@ -1,14 +1,26 @@
 [
   {
     "name": "Name 1",
-    "price": "100"
+    "price": "100",
+    "country": "RU",
+    "rating": "1"
   },
   {
     "name": "Name 2",
-    "price": "200"
+    "price": "200",
+    "country": "RU",
+    "rating": "1"
   },
   {
     "name": "Name 3",
-    "price": "300"
+    "price": "300",
+    "country": "UK",
+    "rating": "2"
+  },
+  {
+    "name": "Name 4",
+    "price": "400",
+    "country": "UK",
+    "rating": "1"
   }
 ]
