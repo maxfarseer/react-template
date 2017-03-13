@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as CountriesActions from '../../actions/CountriesActions'
+import * as RateActions from '../../actions/RateActions'
 
 import Step1 from '../../components/Steps/Step1'
 import Step2 from '../../components/Steps/Step2'
@@ -9,7 +9,7 @@ import Step3 from '../../components/Steps/Step3'
 import Step4 from '../../components/Steps/Step4'
 import Step5 from '../../components/Steps/Step5'
 
-class AddRate extends Component {
+class EditRate extends Component {
   constructor(props) {
     super(props)
     this.nextStep = this.nextStep.bind(this)
@@ -20,7 +20,7 @@ class AddRate extends Component {
     }
   }
   componentDidMount() {
-    this.props.countriesActions.loadCountries()
+    this.props.actions.getRateById(this.props.params.id)
   }
   nextStep() {
     this.setState({
@@ -32,17 +32,14 @@ class AddRate extends Component {
       step: this.state.step-1,
     })
   }
-  handlSend(step, data) { // eslint-disable-line no-unused-vars
-    // устанавливать стейт, в зависимости от данных в шаге
-  }
   renderStep() {
     const { step } = this.state
-    const { data } = this.props.countries
+    const { data, isFetching } = this.props.rate
     //let template
 
     switch(step) {
       case 1:
-        return <Step1 countries={data} send={this.handlSend} />
+        return <Step1 data={data} isLoading={isFetching}/>
       case 2:
         return <Step2/>
       case 3:
@@ -62,6 +59,7 @@ class AddRate extends Component {
     const { step } = this.state
     return (
       <div>
+        <p>EDIT</p>
         { this.renderStep() }
 
         <button className='btn btn-primary' onClick={this.prevStep} disabled={step === 1}>Prev</button>
@@ -79,14 +77,14 @@ class AddRate extends Component {
 
 function mapStateToProps(state) {
   return {
-    countries: state.countries,
+    rate: state.rate,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    countriesActions: bindActionCreators( CountriesActions, dispatch),
+    actions: bindActionCreators( RateActions, dispatch),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddRate)
+export default connect(mapStateToProps, mapDispatchToProps)(EditRate)
