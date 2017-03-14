@@ -31,10 +31,13 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.join(__dirname, 'src'),
-        use: [
-          'react-hot-loader',
-          'babel-loader',
-        ],
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [['es2015', {modules: false}], 'stage-0', 'react'],
+            plugins: ['syntax-dynamic-import']
+          }
+        }]
       },
       {
         test: /\.css$/,

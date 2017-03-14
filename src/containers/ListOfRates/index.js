@@ -3,6 +3,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as RatesActions from '../../actions/RatesActions'
 import * as CountriesActions from '../../actions/CountriesActions'
+//import moment from 'moment'
+
+function determineDate() {
+  import('moment')
+    .then(moment => moment().format('LLLL'))
+    .then(str => console.log(str))
+    .catch(err => console.log('Failed to load moment', err));
+}
+
+determineDate()
 
 class ListOfRates extends Component {
   constructor(props) {

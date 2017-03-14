@@ -30,8 +30,14 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
         include: path.join(__dirname, 'src'),
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [['es2015', {modules: false}], 'stage-0', 'react'],
+            plugins: ['syntax-dynamic-import']
+          }
+        }]
       },
       {
         test: /\.css$/,
